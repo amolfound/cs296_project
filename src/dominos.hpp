@@ -25,6 +25,13 @@
 #ifndef _DOMINOS_HPP_
 #define _DOMINOS_HPP_
 
+#ifndef DEGTORAD
+#define DEGTORAD 0.0174532925199432957f
+#define RADTODEG 57.295779513082320876f
+#endif
+
+//structure to store current surface velocity of a fixture
+
 namespace cs296
 {
   //! This is the class that sets up the Box2D simulation world
@@ -32,13 +39,23 @@ namespace cs296
   class dominos_t : public base_sim_t
   {
   public:
-    
     dominos_t();
-    
-    static base_sim_t* create()
-    {
-      return new dominos_t;
-    }
+      
+    void keyboard(unsigned char key);
+    //void keyboardUp(unsigned char key);
+	static base_sim_t* create()
+	{
+		return new dominos_t;
+	}
+	
+	b2Body* m_car;
+	b2Body* m_wheel1;
+	b2Body* m_wheel2;	
+	float32 m_hz;
+	float32 m_zeta;
+	float32 m_speed;
+	b2WheelJoint* m_spring1;
+	b2WheelJoint* m_spring2;
   };
 }
   
