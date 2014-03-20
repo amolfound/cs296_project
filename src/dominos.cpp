@@ -44,9 +44,9 @@ namespace cs296
    */ 
   dominos_t::dominos_t()
     {		
-		m_hz = 4.0f;
+		m_hz = 10.0f;
 		m_zeta = 0.7f;
-		m_speed = 50.0f;
+		m_speed = 150.0f;
 
 		b2Body* ground = NULL;
 		{
@@ -73,33 +73,38 @@ namespace cs296
 		{
 			b2PolygonShape chassis;
 			b2Vec2 vertices[8];
-			vertices[0].Set(-1.5f, -0.5f);
-			vertices[1].Set(1.5f, -0.5f);
-			vertices[2].Set(1.5f, 0.0f);
-			vertices[3].Set(0.0f, 0.9f);
-			vertices[4].Set(-1.15f, 0.9f);
-			vertices[5].Set(-1.5f, 0.2f);
+			vertices[0].Set(-15.0f, -05.0f);
+			vertices[1].Set(15.0f, -05.0f);
+			vertices[2].Set(15.0f, 0.0f);
+			vertices[3].Set(0.0f, 9.0f);
+			vertices[4].Set(-11.5f, 9.0f);
+			vertices[5].Set(-15.0f, 2.0f);
 			chassis.Set(vertices, 6);
 
 			b2CircleShape circle;
-			circle.m_radius = 0.4f;
-
+			circle.m_radius = 4.0f;
+			
+			b2FixtureDef fdchassis;
+			fdchassis.shape = &chassis;
+			fdchassis.density = 1.0f;
+				
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(0.0f, 1.0f);
+			bd.position.Set(0.0f, 10.0f);
 			m_car = m_world->CreateBody(&bd);
-			m_car->CreateFixture(&chassis, 1.0f);
+			//m_car->CreateFixture(&chassis, 1.0f);
+			m_car->CreateFixture(&fdchassis);
 
 			b2FixtureDef fd;
 			fd.shape = &circle;
 			fd.density = 1.0f;
 			fd.friction = 0.9f;
 
-			bd.position.Set(-1.0f, 0.35f);
+			bd.position.Set(-10.0f, 3.5f);
 			m_wheel1 = m_world->CreateBody(&bd);
 			m_wheel1->CreateFixture(&fd);
 
-			bd.position.Set(1.0f, 0.4f);
+			bd.position.Set(10.0f, 4.0f);
 			m_wheel2 = m_world->CreateBody(&bd);
 			m_wheel2->CreateFixture(&fd);
 
@@ -108,7 +113,7 @@ namespace cs296
 
 			jd.Initialize(m_car, m_wheel1, m_wheel1->GetPosition(), axis);
 			jd.motorSpeed = 0.0f;
-			jd.maxMotorTorque = 20.0f;
+			jd.maxMotorTorque = 10000.0f;
 			jd.enableMotor = true;
 			jd.frequencyHz = m_hz;
 			jd.dampingRatio = m_zeta;
@@ -116,7 +121,7 @@ namespace cs296
 
 			jd.Initialize(m_car, m_wheel2, m_wheel2->GetPosition(), axis);
 			jd.motorSpeed = 0.0f;
-			jd.maxMotorTorque = 10.0f;
+			jd.maxMotorTorque = 8000.0f;
 			jd.enableMotor = false;
 			jd.frequencyHz = m_hz;
 			jd.dampingRatio = m_zeta;
@@ -141,17 +146,17 @@ namespace cs296
 			m_spring1->SetMotorSpeed(-m_speed);
 			break;
 
-		case 'q':
-			m_hz = b2Max(0.0f, m_hz - 1.0f);
-			m_spring1->SetSpringFrequencyHz(m_hz);
-			m_spring2->SetSpringFrequencyHz(m_hz);
-			break;
-
-		case 'e':
-			m_hz += 1.0f;
-			m_spring1->SetSpringFrequencyHz(m_hz);
-			m_spring2->SetSpringFrequencyHz(m_hz);
-			break;
+		//~ case 'q':
+			//~ m_hz = b2Max(0.0f, m_hz - 1.0f);
+			//~ m_spring1->SetSpringFrequencyHz(m_hz);
+			//~ m_spring2->SetSpringFrequencyHz(m_hz);
+			//~ break;
+//~ 
+		//~ case 'e':
+			//~ m_hz += 1.0f;
+			//~ m_spring1->SetSpringFrequencyHz(m_hz);
+			//~ m_spring2->SetSpringFrequencyHz(m_hz);
+			//~ break;
 		}
     }
 
