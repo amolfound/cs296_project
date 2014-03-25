@@ -51,11 +51,13 @@ namespace cs296
 	b2Body* m_car;
 	b2Body* m_wheel1;
 	b2Body* m_wheel2;	
+	b2Body* m_backarm;
 	float32 m_hz;
 	float32 m_zeta;
 	float32 m_speed;
 	b2WheelJoint* m_spring1;
 	b2WheelJoint* m_spring2;
+	b2RevoluteJoint* m_mjoint;
   };
 }
   
