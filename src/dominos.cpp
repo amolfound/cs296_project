@@ -151,7 +151,7 @@ namespace cs296
 			{
 			//Backsidearm2 attatches to backsidearm
 			b2PolygonShape backarm2;
-			backarm2.SetAsBox(1,8);
+			backarm2.SetAsBox(1,9);
 			b2FixtureDef fdbackarm2;
 			fdbackarm2.shape = &backarm2;
 			fdbackarm2.density = 1.0f;
@@ -175,8 +175,8 @@ namespace cs296
 			//revoluteJointDef.localAnchorB.Set(-17.5,-2.7);
 			revoluteJointDef.localAnchorB.Set(0,-7);
 			revoluteJointDef.enableLimit = true;
-			revoluteJointDef.lowerAngle = 8 * DEGTORAD;
-			revoluteJointDef.upperAngle =  30 * DEGTORAD;
+			revoluteJointDef.lowerAngle = 15 * DEGTORAD;
+			revoluteJointDef.upperAngle =  40 * DEGTORAD;
 			revoluteJointDef.enableMotor = true;
 			revoluteJointDef.maxMotorTorque = 5000.0f;
 			//revoluteJointDef.motorSpeed = -90 * DEGTORAD;//90 degrees per second
@@ -190,7 +190,7 @@ namespace cs296
 			revoluteJointDef.bodyB = m_backarm2;
 			//revoluteJointDef.collideConnected = false;
 			revoluteJointDef.localAnchorA.Set(0,7);
-			revoluteJointDef.localAnchorB.Set(0,7);
+			revoluteJointDef.localAnchorB.Set(0,8);
 			revoluteJointDef.enableLimit = true;
 			revoluteJointDef.lowerAngle = -(80 * DEGTORAD);
 			revoluteJointDef.upperAngle = -(20 * DEGTORAD);
@@ -198,6 +198,61 @@ namespace cs296
 			revoluteJointDef.maxMotorTorque = 5000.0f;
 			//revoluteJointDef.motorSpeed = -90 * DEGTORAD;//90 degrees per second
 			m_mjoint2 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
+			}
+			
+			{
+				//Backside pickup
+			b2PolygonShape b1;
+			b1.SetAsBox(0.3,2);
+			b2FixtureDef fdb1;
+			fdb1.shape = &b1;
+			fdb1.density = 1.0f;
+			b2BodyDef bd1;
+			bd1.type = b2_dynamicBody;
+			bd1.position.Set(-20.0f, 10.0f);
+			m_bpick1 = m_world->CreateBody(&bd1);
+			//m_car->CreateFixture(&chassis, 1.0f);
+			m_bpick1->CreateFixture(&fdb1);
+			
+			b2PolygonShape b2;
+			b2.SetAsBox(2,0.1);
+			b2FixtureDef fdb2;
+			fdb2.shape = &b2;
+			fdb2.density = 1.0f;
+			b2BodyDef bd2;
+			bd2.type = b2_dynamicBody;
+			bd2.position.Set(-20.0f, 10.0f);
+			m_bpick2 = m_world->CreateBody(&bd2);
+			//m_car->CreateFixture(&chassis, 1.0f);
+			m_bpick2->CreateFixture(&fdb2);
+			
+	
+			b2RevoluteJointDef revoluteJointDef;
+			revoluteJointDef.bodyA = m_bpick1;
+			revoluteJointDef.bodyB = m_bpick2;
+			revoluteJointDef.localAnchorA.Set(0,-1.5);
+			revoluteJointDef.localAnchorB.Set(-1.45,0);
+			revoluteJointDef.enableLimit = true;
+			revoluteJointDef.lowerAngle = (5 * DEGTORAD);
+			revoluteJointDef.upperAngle = (5 * DEGTORAD);
+			m_mjoint3 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
+     		}
+     		
+     		{
+			//the motorised joint
+			b2RevoluteJointDef revoluteJointDef;
+			revoluteJointDef.bodyA = m_backarm2;
+			revoluteJointDef.bodyB = m_bpick1;
+			revoluteJointDef.collideConnected = false;
+			revoluteJointDef.localAnchorA.Set(0,-8);
+			revoluteJointDef.localAnchorB.Set(0,1.4);
+			revoluteJointDef.enableLimit = true;
+			revoluteJointDef.lowerAngle = (15 * DEGTORAD);
+			revoluteJointDef.upperAngle = (30 * DEGTORAD);
+			revoluteJointDef.enableMotor = true;
+			revoluteJointDef.maxMotorTorque = 5000.0f;
+			//revoluteJointDef.motorSpeed = -90 * DEGTORAD;//90 degrees per second
+			m_mjoint4 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
 			}
 		}
 	}
@@ -233,7 +288,15 @@ namespace cs296
 		
 		case '4':
 			m_mjoint2->SetMotorSpeed(1.0f);
-			break; 
+			break;
+			
+		case '6':
+			m_mjoint4->SetMotorSpeed(-1.0f);
+			break;
+			
+		case '7':	
+			m_mjoint4->SetMotorSpeed(1.0f);
+			break;
 		//~ case '4':
 			//~ m_mjoint2->SetMotorSpeed(10.0f);
 			//~ break;
