@@ -53,8 +53,11 @@ namespace cs296
 	b2Body* m_wheel2;	
 	b2Body* m_backarm1;
 	b2Body* m_backarm2;
+	b2Body* m_frontarm1;
 	b2Body* m_bpick1;
 	b2Body* m_bpick2;
+	b2Body* test_box;
+	b2Body* test_ball;
 	float32 m_hz;
 	float32 m_zeta;
 	float32 m_speed;
@@ -64,6 +67,7 @@ namespace cs296
 	b2RevoluteJoint* m_mjoint2;
 	b2RevoluteJoint* m_mjoint3;
 	b2RevoluteJoint* m_mjoint4;
+	b2RevoluteJoint* m_mjoint5;
   };
 }
   

@@ -254,6 +254,39 @@ namespace cs296
 			//revoluteJointDef.motorSpeed = -90 * DEGTORAD;//90 degrees per second
 			m_mjoint4 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
 			}
+			
+			{
+			//Backside arm attatches to chassis
+			b2PolygonShape frontarm1;
+			frontarm1.SetAsBox(7,0.8);
+			b2FixtureDef fdfrontarm1;
+			fdfrontarm1.shape = &frontarm1;
+			fdfrontarm1.density = 0.80f;
+			
+			b2BodyDef bd;
+			bd.type = b2_dynamicBody;
+			bd.position.Set(30.0f, 10.0f);
+			//bd.angle = 20* DEGTORAD;
+			m_frontarm1 = m_world->CreateBody(&bd);
+			//m_car->CreateFixture(&chassis, 1.0f);
+			m_frontarm1->CreateFixture(&fdfrontarm1);
+			}
+			
+			{
+			//the motorised joint
+			b2RevoluteJointDef revoluteJointDef;
+			revoluteJointDef.bodyA = m_car;
+			revoluteJointDef.bodyB = m_frontarm1;
+			revoluteJointDef.collideConnected = false;
+			revoluteJointDef.localAnchorA.Set(17,-2.7);
+			revoluteJointDef.localAnchorB.Set(-6,0);
+			revoluteJointDef.enableLimit = true;
+			revoluteJointDef.lowerAngle = (-30* DEGTORAD);
+			revoluteJointDef.upperAngle =  (20* DEGTORAD);
+			revoluteJointDef.enableMotor = true;
+			revoluteJointDef.maxMotorTorque = 3000.0f;
+			m_mjoint5 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
+			}
 		}
 	}
     
@@ -290,13 +323,22 @@ namespace cs296
 			m_mjoint2->SetMotorSpeed(1.0f);
 			break;
 			
-		case '6':
+		case '5':
 			m_mjoint4->SetMotorSpeed(-1.0f);
 			break;
 			
-		case '7':	
+		case '6':	
 			m_mjoint4->SetMotorSpeed(1.0f);
 			break;
+			
+		case '7':	
+			m_mjoint5->SetMotorSpeed(-1.0f);
+			break;
+			
+		case '8':	
+			m_mjoint5->SetMotorSpeed(1.0f);
+			break;
+			
 		//~ case '4':
 			//~ m_mjoint2->SetMotorSpeed(10.0f);
 			//~ break;
