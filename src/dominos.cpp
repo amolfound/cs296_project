@@ -166,7 +166,7 @@ namespace cs296
 			}
 			 
 			{
-			//the motorised joint
+			//the  joint joins backside arm 1 with chassis
 			b2RevoluteJointDef revoluteJointDef;
 			revoluteJointDef.bodyA = m_car;
 			revoluteJointDef.bodyB = m_backarm1;
@@ -178,13 +178,13 @@ namespace cs296
 			revoluteJointDef.lowerAngle = 15 * DEGTORAD;
 			revoluteJointDef.upperAngle =  40 * DEGTORAD;
 			revoluteJointDef.enableMotor = true;
-			revoluteJointDef.maxMotorTorque = 5000.0f;
+			revoluteJointDef.maxMotorTorque = 7000.0f;
 			//revoluteJointDef.motorSpeed = -90 * DEGTORAD;//90 degrees per second
 			m_mjoint1 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
 			}
 			
 			{
-			//the motorised joint
+			//the  joint joins backside arm 1 with backside arm 2 
 			b2RevoluteJointDef revoluteJointDef;
 			revoluteJointDef.bodyA = m_backarm1;
 			revoluteJointDef.bodyB = m_backarm2;
@@ -247,7 +247,7 @@ namespace cs296
 			revoluteJointDef.localAnchorA.Set(0,-8);
 			revoluteJointDef.localAnchorB.Set(0,1.4);
 			revoluteJointDef.enableLimit = true;
-			revoluteJointDef.lowerAngle = (15 * DEGTORAD);
+			revoluteJointDef.lowerAngle = (0 * DEGTORAD);
 			revoluteJointDef.upperAngle = (30 * DEGTORAD);
 			revoluteJointDef.enableMotor = true;
 			revoluteJointDef.maxMotorTorque = 5000.0f;
@@ -281,7 +281,7 @@ namespace cs296
 			revoluteJointDef.localAnchorA.Set(17,-2.7);
 			revoluteJointDef.localAnchorB.Set(-6,0);
 			revoluteJointDef.enableLimit = true;
-			revoluteJointDef.lowerAngle = (50* DEGTORAD);
+			revoluteJointDef.lowerAngle = (45* DEGTORAD);
 			revoluteJointDef.upperAngle =  (70* DEGTORAD);
 			revoluteJointDef.enableMotor = true;
 			revoluteJointDef.maxMotorTorque = 3000.0f;
@@ -313,10 +313,10 @@ namespace cs296
 			revoluteJointDef.localAnchorA.Set(6,-0);
 			revoluteJointDef.localAnchorB.Set(-5,0);
 			revoluteJointDef.enableLimit = true;
-			revoluteJointDef.lowerAngle = (-145* DEGTORAD);
+			revoluteJointDef.lowerAngle = (-130* DEGTORAD);
 			revoluteJointDef.upperAngle =  (-110* DEGTORAD);
 			revoluteJointDef.enableMotor = true;
-			revoluteJointDef.maxMotorTorque = 3000.0f;
+			revoluteJointDef.maxMotorTorque = 5000.0f;
 			m_mjoint6 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
 			}
 			
@@ -413,14 +413,13 @@ namespace cs296
 			pjd.collideConnected = false;
 			pjd.localAxisA.Set(1,0);
 			pjd.localAnchorA.Set( 0.8f,0);
-			pjd.localAnchorB.Set(-0.8f,0);
+			pjd.localAnchorB.Set(-0.4f,0);
 			pjd.enableMotor = true;
 			pjd.maxMotorForce = 100.0f;
 			pjd.enableLimit = true;
 			pjd.lowerTranslation = 0.0f;
 			pjd.upperTranslation = 0.6f;
-			m_pistonjoint = (b2PrismaticJoint*)m_world->CreateJoint(&pjd);
-			
+			m_pistonjoint = (b2PrismaticJoint*)m_world->CreateJoint(&pjd);		
 			}
 			
 		}
@@ -444,7 +443,7 @@ namespace cs296
 			break;
 		
 		case '1':
-			m_mjoint1->SetMotorSpeed(1.0f);
+			m_mjoint1->SetMotorSpeed(0.2f);
 			break;	
 			
 		case '2':
@@ -468,13 +467,21 @@ namespace cs296
 			break;
 			
 		case '7':	
-			m_mjoint5->SetMotorSpeed(-1.0f);
+			m_mjoint5->SetMotorSpeed(1.0f);
 			break;
 			
 		case '8':	
-			m_mjoint5->SetMotorSpeed(1.0f);
+			m_mjoint5->SetMotorSpeed(-1.0f);
 			break;
 		
+		case '9':	
+			m_mjoint6->SetMotorSpeed(-1.0f);
+			break;
+		
+		case '0':	
+			m_mjoint6->SetMotorSpeed(1.0f);
+			break;	
+			
 		case 'u':	
 			m_pistonjoint->SetMotorSpeed(-2.0f);
 			break;
