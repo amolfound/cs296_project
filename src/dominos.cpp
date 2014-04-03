@@ -71,6 +71,7 @@ namespace cs296
 
 		// Car
 		{   //chassis
+			//creates chassis shape with polygon
 			b2PolygonShape chassis;
 			b2Vec2 vertices[8];
 			vertices[0].Set(-19.0f, -05.0f);
@@ -80,14 +81,17 @@ namespace cs296
 			vertices[4].Set(-13.0f,13.0f);
 			vertices[5].Set(-19.0f, 3.0f);
 			chassis.Set(vertices, 6);
-
+			
+			//creates circular shape for wheel
 			b2CircleShape circle;
 			circle.m_radius = 4.0f;
 			
+			//creates fixture for the chassis with the polygon shape and some density.
 			b2FixtureDef fdchassis;
 			fdchassis.shape = &chassis;
 			fdchassis.density = 5.0f;
-				
+			
+			//creates the body for chassis in m_world using the above fixture	
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
 			bd.position.Set(0.0f, 10.0f);
@@ -97,22 +101,27 @@ namespace cs296
 
 
 			//Wheels
+			//creates fixture for wheel
 			b2FixtureDef fd;
 			fd.shape = &circle;
 			fd.density = 10.0f;
 			fd.friction = 0.9f;
-
+			
+			//creates rear wheel using fd fixture
 			bd.position.Set(-10.0f, 3.5f);
 			m_wheel1 = m_world->CreateBody(&bd);
 			m_wheel1->CreateFixture(&fd);
-
+			
+			//creates front wheel using fd fixture
 			bd.position.Set(10.0f, 4.0f);
 			m_wheel2 = m_world->CreateBody(&bd);
 			m_wheel2->CreateFixture(&fd);
-
+			
+			//creates a wheel joint prototype
 			b2WheelJointDef jd;
 			b2Vec2 axis(0.0f, 1.0f);
-
+			
+			//places the joint in the m_world using wheel joint prototype for the rear wheel
 			jd.Initialize(m_car, m_wheel1, m_wheel1->GetPosition(), axis);
 			jd.motorSpeed = 0.0f;
 			jd.maxMotorTorque = 50000.0f;
@@ -120,7 +129,8 @@ namespace cs296
 			jd.frequencyHz = m_hz;
 			jd.dampingRatio = m_zeta;
 			m_spring1 = (b2WheelJoint*)m_world->CreateJoint(&jd);
-
+			
+			//places the joint in the m_world using wheel joint prototype for the front wheel
 			jd.Initialize(m_car, m_wheel2, m_wheel2->GetPosition(), axis);
 			jd.motorSpeed = 0.0f;
 			jd.maxMotorTorque = 40000.0f;
@@ -131,7 +141,7 @@ namespace cs296
 			
 			
 			{
-			//Backside arm attatches to chassis
+			//Backside arm attached to chassis
 			b2PolygonShape backarm1;
 			backarm1.SetAsBox(1,8);
 			b2FixtureDef fdbackarm1;

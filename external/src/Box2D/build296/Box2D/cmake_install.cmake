@@ -1,4 +1,4 @@
-# Install script for directory: /home/amol/cs296_project/external/src/Box2D/Box2D
+# Install script for directory: /home/rakesh/bin/cs296_project/external/src/Box2D/Box2D
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -33,97 +33,97 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Box2D" TYPE FILE FILES "/home/amol/cs296_project/external/src/Box2D/Box2D/Box2D.h")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Box2D" TYPE FILE FILES "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Box2D.h")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Box2D/Collision" TYPE FILE FILES
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Collision/b2BroadPhase.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Collision/b2Collision.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Collision/b2Distance.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Collision/b2DynamicTree.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Collision/b2TimeOfImpact.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Collision/b2BroadPhase.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Collision/b2Collision.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Collision/b2Distance.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Collision/b2DynamicTree.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Collision/b2TimeOfImpact.h"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Box2D/Collision/Shapes" TYPE FILE FILES
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Collision/Shapes/b2CircleShape.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Collision/Shapes/b2EdgeShape.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Collision/Shapes/b2ChainShape.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Collision/Shapes/b2PolygonShape.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Collision/Shapes/b2Shape.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Collision/Shapes/b2CircleShape.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Collision/Shapes/b2EdgeShape.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Collision/Shapes/b2ChainShape.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Collision/Shapes/b2PolygonShape.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Collision/Shapes/b2Shape.h"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Box2D/Common" TYPE FILE FILES
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Common/b2BlockAllocator.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Common/b2Draw.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Common/b2GrowableStack.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Common/b2Math.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Common/b2Settings.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Common/b2StackAllocator.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Common/b2Timer.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Common/b2BlockAllocator.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Common/b2Draw.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Common/b2GrowableStack.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Common/b2Math.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Common/b2Settings.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Common/b2StackAllocator.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Common/b2Timer.h"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Box2D/Dynamics" TYPE FILE FILES
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/b2Body.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/b2ContactManager.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/b2Fixture.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/b2Island.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/b2TimeStep.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/b2World.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/b2WorldCallbacks.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/b2Body.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/b2ContactManager.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/b2Fixture.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/b2Island.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/b2TimeStep.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/b2World.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/b2WorldCallbacks.h"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Box2D/Dynamics/Contacts" TYPE FILE FILES
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2CircleContact.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2Contact.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2PolygonContact.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2CircleContact.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2Contact.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2ContactSolver.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Contacts/b2PolygonContact.h"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Box2D/Dynamics/Joints" TYPE FILE FILES
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2DistanceJoint.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2FrictionJoint.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2GearJoint.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2Joint.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2MouseJoint.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2PrismaticJoint.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2PulleyJoint.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2RevoluteJoint.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2WeldJoint.h"
-    "/home/amol/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2WheelJoint.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2DistanceJoint.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2FrictionJoint.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2GearJoint.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2Joint.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2MotorJoint.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2MouseJoint.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2PrismaticJoint.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2PulleyJoint.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2RevoluteJoint.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2RopeJoint.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2WeldJoint.h"
+    "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Dynamics/Joints/b2WheelJoint.h"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Box2D/Rope" TYPE FILE FILES "/home/amol/cs296_project/external/src/Box2D/Box2D/Rope/b2Rope.h")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/Box2D/Rope" TYPE FILE FILES "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Rope/b2Rope.h")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/amol/cs296_project/external/src/Box2D/build296/Box2D/libBox2D.a")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/rakesh/bin/cs296_project/external/src/Box2D/build296/Box2D/libBox2D.a")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   IF(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/Box2D/Box2D-targets.cmake")
     FILE(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/Box2D/Box2D-targets.cmake"
-         "/home/amol/cs296_project/external/src/Box2D/build296/Box2D/CMakeFiles/Export/lib/Box2D/Box2D-targets.cmake")
+         "/home/rakesh/bin/cs296_project/external/src/Box2D/build296/Box2D/CMakeFiles/Export/lib/Box2D/Box2D-targets.cmake")
     IF(EXPORT_FILE_CHANGED)
       FILE(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/Box2D/Box2D-targets-*.cmake")
       IF(OLD_CONFIG_FILES)
@@ -132,13 +132,13 @@ IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
       ENDIF(OLD_CONFIG_FILES)
     ENDIF(EXPORT_FILE_CHANGED)
   ENDIF()
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/Box2D" TYPE FILE FILES "/home/amol/cs296_project/external/src/Box2D/build296/Box2D/CMakeFiles/Export/lib/Box2D/Box2D-targets.cmake")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/Box2D" TYPE FILE FILES "/home/rakesh/bin/cs296_project/external/src/Box2D/build296/Box2D/CMakeFiles/Export/lib/Box2D/Box2D-targets.cmake")
   IF("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^()$")
-    FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/Box2D" TYPE FILE FILES "/home/amol/cs296_project/external/src/Box2D/build296/Box2D/CMakeFiles/Export/lib/Box2D/Box2D-targets-noconfig.cmake")
+    FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/Box2D" TYPE FILE FILES "/home/rakesh/bin/cs296_project/external/src/Box2D/build296/Box2D/CMakeFiles/Export/lib/Box2D/Box2D-targets-noconfig.cmake")
   ENDIF("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^()$")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/Box2D" TYPE FILE FILES "/home/amol/cs296_project/external/src/Box2D/Box2D/Box2DConfig.cmake")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/Box2D" TYPE FILE FILES "/home/rakesh/bin/cs296_project/external/src/Box2D/Box2D/Box2DConfig.cmake")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
