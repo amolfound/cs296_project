@@ -54,20 +54,32 @@ namespace cs296
 	b2Body* m_backarm1;
 	b2Body* m_backarm2;
 	b2Body* m_frontarm1;
+	b2Body* m_frontarm2;
 	b2Body* m_bpick1;
 	b2Body* m_bpick2;
-	b2Body* test_box;
+	b2Body* m_piston1;
+	b2Body* m_piston2;
+	b2Body* m_piston3;
+	b2Body* m_pistonsupp;
+	b2Body* test_box1;
+	b2Body* test_box2;
 	b2Body* test_ball;
+	b2Body* obs;
 	float32 m_hz;
 	float32 m_zeta;
 	float32 m_speed;
 	b2WheelJoint* m_spring1;
 	b2WheelJoint* m_spring2;
-	b2RevoluteJoint* m_mjoint1;
-	b2RevoluteJoint* m_mjoint2;
-	b2RevoluteJoint* m_mjoint3;
-	b2RevoluteJoint* m_mjoint4;
-	b2RevoluteJoint* m_mjoint5;
+	b2RevoluteJoint* m_mjoint1;				//car + backsidearm1
+	b2RevoluteJoint* m_mjoint2;				//backsidearm1 + backsidearm2			
+	b2RevoluteJoint* m_mjoint3;             //fixed joint to form back pickup
+	b2RevoluteJoint* m_mjoint4;				//backsidearm2 + backpickup
+	b2RevoluteJoint* m_mjoint5;				//car + frontarm1	
+	b2RevoluteJoint* m_mjoint6;				//frontarm1 + frontarm2
+	b2RevoluteJoint* m_mjoint7;				//fixed joint pistonsupp + frontarm2	
+	b2RevoluteJoint* m_mjoint8;				//fixed joint pistonsupp + piston1
+	b2RevoluteJoint* m_mjoint9;				//fixed piston2 + piston3	
+	b2PrismaticJoint* m_pistonjoint;		//piston movement piston1 + piston2
   };
 }
   
