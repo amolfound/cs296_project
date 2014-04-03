@@ -61,8 +61,10 @@ namespace cs296
 	b2Body* m_piston2;
 	b2Body* m_piston3;
 	b2Body* m_pistonsupp;
-	b2Body* test_box;
+	b2Body* test_box1;
+	b2Body* test_box2;
 	b2Body* test_ball;
+	b2Body* obs;
 	float32 m_hz;
 	float32 m_zeta;
 	float32 m_speed;

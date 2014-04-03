@@ -218,7 +218,7 @@ namespace cs296
 			b2.SetAsBox(2,0.1);
 			b2FixtureDef fdb2;
 			fdb2.shape = &b2;
-			fdb2.density = 1.0f;
+			fdb2.density = 2.0f;
 			b2BodyDef bd2;
 			bd2.type = b2_dynamicBody;
 			bd2.position.Set(-20.0f, 10.0f);
@@ -435,8 +435,33 @@ namespace cs296
 			b2BodyDef bd;
 			bd.position.Set(40.0f, 1.0f);
 			bd.type = b2_dynamicBody;
-			test_box = m_world->CreateBody(&bd);
-			test_box->CreateFixture(&fdtestbox);
+			test_box1 = m_world->CreateBody(&bd);
+			test_box1->CreateFixture(&fdtestbox);
+			}
+			
+			//testball
+			{
+			b2CircleShape circle;
+			circle.m_radius = 1.1f;
+			b2FixtureDef fd;
+			fd.shape = &circle;
+			fd.density = 1.5f;
+			fd.friction = 0.9f;
+			bd.position.Set(-35.0f, 3.5f);
+			test_ball = m_world->CreateBody(&bd);
+			test_ball->CreateFixture(&fd);
+			}
+			
+			//fixed obstacle
+			{
+			b2PolygonShape testbox;
+			testbox.SetAsBox(0.1,1);
+			b2FixtureDef fdtestbox;
+			fdtestbox.shape = &testbox;
+			b2BodyDef bd;
+			bd.position.Set(-33.0f, 1);
+			obs = m_world->CreateBody(&bd);
+			obs->CreateFixture(&fdtestbox);
 			}
 			
 		}
@@ -472,7 +497,7 @@ namespace cs296
 			break;	
 		
 		case '4':
-			m_mjoint2->SetMotorSpeed(1.0f);
+			m_mjoint2->SetMotorSpeed(0.3f);
 			break;
 			
 		case '5':
