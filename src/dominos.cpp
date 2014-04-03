@@ -327,6 +327,7 @@ namespace cs296
 			fdpistonsupp.filter.groupIndex=-1;
 			fdpistonsupp.shape = &pistonsupp;
 			fdpistonsupp.density = 0.1f;
+			fdpistonsupp.friction= 0.5f;
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
 			m_pistonsupp = m_world->CreateBody(&bd);
@@ -374,6 +375,7 @@ namespace cs296
 			b2FixtureDef fdpiston3;
 			fdpiston3.shape = &piston3;
 			fdpiston3.density = 0.001f;
+			fdpiston3.friction= 0.5f;
 			fdpiston3.filter.groupIndex=-1;
 			b2BodyDef bd3;
 			bd3.position.Set(44.0f, 10.0f);
@@ -417,9 +419,24 @@ namespace cs296
 			pjd.enableMotor = true;
 			pjd.maxMotorForce = 100.0f;
 			pjd.enableLimit = true;
-			pjd.lowerTranslation = 0.0f;
+			pjd.lowerTranslation = 0.12f;
 			pjd.upperTranslation = 0.6f;
 			m_pistonjoint = (b2PrismaticJoint*)m_world->CreateJoint(&pjd);		
+			}
+			
+			//testbox
+			{
+			b2PolygonShape testbox;
+			testbox.SetAsBox(1.4,1.4);
+			b2FixtureDef fdtestbox;
+			fdtestbox.shape = &testbox;
+			fdtestbox.density = 0.0001f;
+			fdtestbox.friction=0.5;
+			b2BodyDef bd;
+			bd.position.Set(40.0f, 1.0f);
+			bd.type = b2_dynamicBody;
+			test_box = m_world->CreateBody(&bd);
+			test_box->CreateFixture(&fdtestbox);
 			}
 			
 		}
