@@ -49,8 +49,11 @@ namespace cs296
 	}
 	
 	b2Body* m_car;
+	b2Body* m_car_up;
 	b2Body* m_wheel1;
-	b2Body* m_wheel2;	
+	b2Body* m_wheel2;
+	b2Body* m_wheel3;
+	b2Body* m_wheel4;	
 	b2Body* m_backarm1;
 	b2Body* m_backarm2;
 	b2Body* m_frontarm1;

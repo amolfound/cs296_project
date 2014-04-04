@@ -70,21 +70,18 @@ namespace cs296
 		}
 
 		// Car
-		{   //chassis
+		{   
+			{//chassis
 			//creates chassis shape with polygon
 			b2PolygonShape chassis;
-			b2Vec2 vertices[8];
+			b2Vec2 vertices[5];
 			vertices[0].Set(-19.0f, -05.0f);
 			vertices[1].Set(19.0f, -05.0f);
-			vertices[2].Set(16.5f, 0.0f);
-			vertices[3].Set(3.5f, 13.0f);
-			vertices[4].Set(-13.0f,13.0f);
-			vertices[5].Set(-19.0f, 3.0f);
-			chassis.Set(vertices, 6);
-			
-			//creates circular shape for wheel
-			b2CircleShape circle;
-			circle.m_radius = 4.0f;
+			vertices[2].Set(19.0f, 5.0f);
+			vertices[3].Set(0.0f, 8.0f);
+			vertices[4].Set(-19.0f, 8.0f);
+			chassis.Set(vertices, 5);
+
 			
 			//creates fixture for the chassis with the polygon shape and some density.
 			b2FixtureDef fdchassis;
@@ -98,22 +95,42 @@ namespace cs296
 			m_car = m_world->CreateBody(&bd);
 			//m_car->CreateFixture(&chassis, 1.0f);
 			m_car->CreateFixture(&fdchassis);
-
-
+			
+			b2PolygonShape chassis_up;
+			chassis_up.SetAsBox(9.5,7);
+			fdchassis.shape = &chassis_up;
+			bd.position.Set(-9.5f,25.0f);
+			m_car_up = m_world->CreateBody(&bd);
+			m_car_up->CreateFixture(&fdchassis);
+			
+			b2WeldJointDef wj;
+			wj.Initialize(m_car, m_car_up, m_car_up->GetPosition());
+			m_world->CreateJoint(&wj);
+			}
+			
+			{
+			//creates circular shape for wheel
+			b2CircleShape circle;
+			circle.m_radius = 7.0f;
+			
 			//Wheels
 			//creates fixture for wheel
 			b2FixtureDef fd;
 			fd.shape = &circle;
 			fd.density = 10.0f;
 			fd.friction = 0.9f;
+			fd.filter.groupIndex=-1;
 			
 			//creates rear wheel using fd fixture
-			bd.position.Set(-10.0f, 3.5f);
+			b2BodyDef bd;
+			bd.type = b2_dynamicBody;
+			bd.position.Set(-14.0f, 6.5f);
 			m_wheel1 = m_world->CreateBody(&bd);
 			m_wheel1->CreateFixture(&fd);
 			
 			//creates front wheel using fd fixture
-			bd.position.Set(10.0f, 4.0f);
+			circle.m_radius = 6.0f;
+			bd.position.Set(13.0f, 6.0f);
 			m_wheel2 = m_world->CreateBody(&bd);
 			m_wheel2->CreateFixture(&fd);
 			
@@ -138,7 +155,7 @@ namespace cs296
 			jd.frequencyHz = m_hz;
 			jd.dampingRatio = m_zeta;
 			m_spring2 = (b2WheelJoint*)m_world->CreateJoint(&jd);
-			
+			}
 			
 			{
 			//Backside arm attached to chassis
@@ -147,7 +164,7 @@ namespace cs296
 			b2FixtureDef fdbackarm1;
 			fdbackarm1.shape = &backarm1;
 			fdbackarm1.density = 1.0f;
-			
+			fdbackarm1.filter.groupIndex = -1;
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
 			bd.position.Set(-20.0f, 10.0f);
@@ -270,6 +287,7 @@ namespace cs296
 			b2PolygonShape frontarm1;
 			frontarm1.SetAsBox(7,0.7);
 			b2FixtureDef fdfrontarm1;
+			fdfrontarm1.filter.groupIndex = -1;
 			fdfrontarm1.shape = &frontarm1;
 			fdfrontarm1.density = 0.80f;
 			
@@ -299,7 +317,7 @@ namespace cs296
 			}
 			
 			{
-			//Frontarm2 arm attatches to frontarm2
+			//Frontarm2 arm attatches to frontarm1
 			b2PolygonShape frontarm2;
 			frontarm2.SetAsBox(6,0.6);
 			b2FixtureDef fdfrontarm2;
@@ -457,6 +475,8 @@ namespace cs296
 			fd.shape = &circle;
 			fd.density = 1.5f;
 			fd.friction = 0.9f;
+			b2BodyDef bd;
+			bd.type = b2_dynamicBody;
 			bd.position.Set(-35.0f, 3.5f);
 			test_ball = m_world->CreateBody(&bd);
 			test_ball->CreateFixture(&fd);
@@ -541,34 +561,9 @@ namespace cs296
 		case 'i':	
 			m_pistonjoint->SetMotorSpeed(2.0f);
 			break;
-				
-		//~ case '4':
-			//~ m_mjoint2->SetMotorSpeed(10.0f);
-			//~ break;
-		
-		//~ case 'q':
-			//~ m_hz = b2Max(0.0f, m_hz - 1.0f);
-			//~ m_spring1->SetSpringFrequencyHz(m_hz);
-			//~ m_spring2->SetSpringFrequencyHz(m_hz);
-			//~ break;
-//~ 
-		//~ case 'e':
-			//~ m_hz += 1.0f;
-			//~ m_spring1->SetSpringFrequencyHz(m_hz);
-			//~ m_spring2->SetSpringFrequencyHz(m_hz);
-			//~ break;
 		}
     }
 
-    //~ void dominos_t::keyboardUp(unsigned char key)
-    //~ {
-        //~ switch (key) {
-        //~ case 'q': case 'e': m_circleConveyor.surfaceVelocity = 0; break;
-        //~ case 'a': case 'd': m_polygonConveyor.surfaceVelocity = 0; break;
-        //~ default: base_sim_t::keyboard(key);
-        //~ }
-    //~ }
-    
   
 
   sim_t *sim = new sim_t("Dominos", dominos_t::create);
