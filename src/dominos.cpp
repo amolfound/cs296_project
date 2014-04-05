@@ -69,9 +69,10 @@ namespace cs296
 			
 		}
 
-		// Car
-		{   
-			{//chassis
+		
+		{	// Car  
+			{	//chassis
+			
 			//creates chassis shape with polygon
 			b2PolygonShape chassis;
 			b2Vec2 vertices[5];
@@ -99,6 +100,7 @@ namespace cs296
 			b2PolygonShape chassis_up;
 			chassis_up.SetAsBox(9.5,7);
 			fdchassis.shape = &chassis_up;
+			fdchassis.filter.groupIndex = -1;
 			bd.position.Set(-9.5f,25.0f);
 			m_car_up = m_world->CreateBody(&bd);
 			m_car_up->CreateFixture(&fdchassis);
@@ -106,14 +108,74 @@ namespace cs296
 			b2WeldJointDef wj;
 			wj.Initialize(m_car, m_car_up, m_car_up->GetPosition());
 			m_world->CreateJoint(&wj);
+			
+			b2PolygonShape hinge;
+			hinge.SetAsBox(2,2);
+			fdchassis.shape = &hinge;
+			bd.position.Set(-21.0f,7.0f);
+			m_back_hinge = m_world->CreateBody(&bd);
+			m_back_hinge->CreateFixture(&fdchassis);
+			
+			wj.Initialize(m_car, m_back_hinge, m_back_hinge->GetPosition());
+			m_world->CreateJoint(&wj);
 			}
 			
-			{
+			{ //gas pipe
+			b2PolygonShape pipe;
+			b2Vec2 vertices[5];
+			vertices[0].Set(-1.2f, 0.0f);
+			vertices[1].Set(1.2f, 0.0f);
+			vertices[2].Set(1.0f, 1.0f);
+			vertices[3].Set(-1.0f, 1.0f);
+			pipe.Set(vertices, 4);
+
+			b2FixtureDef fdpipe;
+			fdpipe.shape = &pipe;
+			fdpipe.filter.groupIndex = -1;
+			fdpipe.density = 1.0f;
+				
+			b2BodyDef bd;
+			bd.type = b2_dynamicBody;
+			bd.position.Set(10.0f, 16.2f);
+			m_pipe_part1 = m_world->CreateBody(&bd);
+			m_pipe_part1->CreateFixture(&fdpipe);
+			
+			b2WeldJointDef wj;
+			wj.Initialize(m_car, m_pipe_part1, m_pipe_part1->GetPosition());
+			m_world->CreateJoint(&wj);
+			
+			vertices[0].Set(1.0f, 1.0f);
+			vertices[1].Set(1.0f, 7.0f);
+			vertices[2].Set(0.0f, 9.0f);
+			vertices[3].Set(-1.0f, 7.0f);
+			vertices[4].Set(-1.0f, 1.0f);
+			pipe.Set(vertices, 5);
+			
+			m_pipe_part2 = m_world->CreateBody(&bd);
+			m_pipe_part2->CreateFixture(&fdpipe);
+			
+			wj.Initialize(m_pipe_part1, m_pipe_part2, m_pipe_part2->GetPosition());
+			m_world->CreateJoint(&wj);
+			
+			vertices[0].Set(1.0f, 7.0f);
+			vertices[1].Set(1.5f, 7.2f);
+			vertices[2].Set(1.5f, 9.2f);
+			vertices[3].Set(0.0f, 9.0f);
+			pipe.Set(vertices, 4);
+			
+			m_pipe_part3 = m_world->CreateBody(&bd);
+			m_pipe_part3->CreateFixture(&fdpipe);
+			
+			wj.Initialize(m_pipe_part2, m_pipe_part3, m_pipe_part3->GetPosition());
+			m_world->CreateJoint(&wj);
+						
+			}
+			
+			{	//Wheels
 			//creates circular shape for wheel
 			b2CircleShape circle;
 			circle.m_radius = 7.0f;
 			
-			//Wheels
 			//creates fixture for wheel
 			b2FixtureDef fd;
 			fd.shape = &circle;
@@ -157,300 +219,374 @@ namespace cs296
 			m_spring2 = (b2WheelJoint*)m_world->CreateJoint(&jd);
 			}
 			
-			{
-			//Backside arm attached to chassis
+			{	//Backside arm attached to back_hinge
+			
 			b2PolygonShape backarm1;
-			backarm1.SetAsBox(1,8);
+			b2Vec2 vertices[5];
+			vertices[0].Set(0.0f, -10.0f);
+			vertices[1].Set(2.0f, -10.0f);
+			vertices[2].Set(2.0f, 0.0f);
+			vertices[3].Set(-4.0f, 16.0f);
+			vertices[4].Set(-5.0f, 16.0f);
+			backarm1.Set(vertices,5);
+			
 			b2FixtureDef fdbackarm1;
 			fdbackarm1.shape = &backarm1;
 			fdbackarm1.density = 1.0f;
 			fdbackarm1.filter.groupIndex = -1;
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(-20.0f, 10.0f);
-			bd.angle = 20* DEGTORAD;
+			bd.position.Set(-17.0f, 15.0f);
 			m_backarm1 = m_world->CreateBody(&bd);
 			//m_car->CreateFixture(&chassis, 1.0f);
 			m_backarm1->CreateFixture(&fdbackarm1);
 			}
 			
-			
-			{
-			//Backsidearm2 attatches to backsidearm
+			{	//Backsidearm2 attached to backsidearm
 			b2PolygonShape backarm2;
-			backarm2.SetAsBox(1,9);
+			b2Vec2 vertices[6];
+			vertices[0].Set(-0.5f, -14.0f);
+			vertices[1].Set(-2.0f, 13.5f);
+			vertices[2].Set(-1.33f, 14.0f);
+			vertices[3].Set(1.33f, 14.0f);
+			vertices[4].Set(2.0f, 13.5f);
+			vertices[5].Set(0.5f, -14.0f);
+			backarm2.Set(vertices,6);
 			b2FixtureDef fdbackarm2;
 			fdbackarm2.shape = &backarm2;
 			fdbackarm2.density = 1.0f;
 			
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(-30.0f, 10.0f);
-			//bd.angle = -20* DEGTORAD;
+			bd.position.Set(-30.0f, 15.0f);
 			m_backarm2 = m_world->CreateBody(&bd);
 			//m_car->CreateFixture(&chassis, 1.0f);
 			m_backarm2->CreateFixture(&fdbackarm2);
 			}
 			 
-			{
-			//the  joint joins backside arm 1 with chassis
+			{	//the  joint joins backside arm 1 with chassis
+			
 			b2RevoluteJointDef revoluteJointDef;
-			revoluteJointDef.bodyA = m_car;
+			revoluteJointDef.bodyA = m_back_hinge;
 			revoluteJointDef.bodyB = m_backarm1;
 			revoluteJointDef.collideConnected = false;
-			revoluteJointDef.localAnchorA.Set(-17.5,-2.7);
-			//revoluteJointDef.localAnchorB.Set(-17.5,-2.7);
-			revoluteJointDef.localAnchorB.Set(0,-7);
+			revoluteJointDef.localAnchorA.Set(0,0);
+			revoluteJointDef.localAnchorB.Set(1,-9);
 			revoluteJointDef.enableLimit = true;
-			revoluteJointDef.lowerAngle = 15 * DEGTORAD;
-			revoluteJointDef.upperAngle =  40 * DEGTORAD;
+			revoluteJointDef.lowerAngle = -50 * DEGTORAD;
+			revoluteJointDef.upperAngle =  20 * DEGTORAD;
 			revoluteJointDef.enableMotor = true;
-			revoluteJointDef.maxMotorTorque = 7000.0f;
-			//revoluteJointDef.motorSpeed = -90 * DEGTORAD;//90 degrees per second
+			revoluteJointDef.maxMotorTorque = 14000.0f;
 			m_mjoint1 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
 			}
 			
-			{
-			//the  joint joins backside arm 1 with backside arm 2 
+			{	//the  joint joins backside arm 1 with backside arm 2 
+			
 			b2RevoluteJointDef revoluteJointDef;
 			revoluteJointDef.bodyA = m_backarm1;
 			revoluteJointDef.bodyB = m_backarm2;
 			//revoluteJointDef.collideConnected = false;
-			revoluteJointDef.localAnchorA.Set(0,7);
-			revoluteJointDef.localAnchorB.Set(0,8);
+			revoluteJointDef.localAnchorA.Set(-4.5,16);
+			revoluteJointDef.localAnchorB.Set(0,13.0);
 			revoluteJointDef.enableLimit = true;
 			revoluteJointDef.lowerAngle = -(80 * DEGTORAD);
 			revoluteJointDef.upperAngle = -(20 * DEGTORAD);
 			revoluteJointDef.enableMotor = true;
-			revoluteJointDef.maxMotorTorque = 5000.0f;
+			revoluteJointDef.maxMotorTorque = 8000.0f;
 			//revoluteJointDef.motorSpeed = -90 * DEGTORAD;//90 degrees per second
 			m_mjoint2 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
 			}
 			
-			{
-				//Backside pickup
+			{	//Backside pickup
+			
 			b2PolygonShape b1;
-			b1.SetAsBox(0.3,2);
+			b2Vec2 vertices[4];
+			vertices[0].Set(0.0f, 3.0f);
+			vertices[1].Set(-1.0f, 1.0f);
+			vertices[2].Set(-1.5f, 2.0f);
+			b1.Set(vertices, 3);
+			
 			b2FixtureDef fdb1;
 			fdb1.shape = &b1;
 			fdb1.density = 1.0f;
 			b2BodyDef bd1;
 			bd1.type = b2_dynamicBody;
-			bd1.position.Set(-20.0f, 10.0f);
+			bd1.position.Set(-30.0f, 5.0f);
 			m_bpick1 = m_world->CreateBody(&bd1);
 			//m_car->CreateFixture(&chassis, 1.0f);
 			m_bpick1->CreateFixture(&fdb1);
 			
-			b2PolygonShape b2;
-			b2.SetAsBox(2,0.1);
-			b2FixtureDef fdb2;
-			fdb2.shape = &b2;
-			fdb2.density = 2.0f;
-			b2BodyDef bd2;
-			bd2.type = b2_dynamicBody;
-			bd2.position.Set(-20.0f, 10.0f);
-			m_bpick2 = m_world->CreateBody(&bd2);
-			//m_car->CreateFixture(&chassis, 1.0f);
-			m_bpick2->CreateFixture(&fdb2);
+			vertices[0].Set(-1.5f, 0.2f);
+			vertices[1].Set(-1.0f, 1.0f);
+			vertices[2].Set(-1.5f, 2.0f);
+			vertices[3].Set(-2.0f, 0.0f);
+			b1.Set(vertices, 4);
+			fdb1.shape = &b1;
+			m_bpick2 = m_world->CreateBody(&bd1);
+			m_bpick2->CreateFixture(&fdb1);
 			
-	
-			b2RevoluteJointDef revoluteJointDef;
-			revoluteJointDef.bodyA = m_bpick1;
-			revoluteJointDef.bodyB = m_bpick2;
-			revoluteJointDef.localAnchorA.Set(0,-1.5);
-			revoluteJointDef.localAnchorB.Set(-1.45,0);
-			revoluteJointDef.enableLimit = true;
-			revoluteJointDef.lowerAngle = (5 * DEGTORAD);
-			revoluteJointDef.upperAngle = (5 * DEGTORAD);
-			m_mjoint3 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
+			b2WeldJointDef wj;
+			wj.Initialize(m_bpick1, m_bpick2, m_bpick2->GetPosition());
+			m_world->CreateJoint(&wj);
+			
+			vertices[0].Set(-1.5f, 0.2f);
+			vertices[1].Set(-1.0f, -2.0f);
+			vertices[2].Set(-1.5f, -2.0f);
+			vertices[3].Set(-2.0f, 0.0f);
+			b1.Set(vertices, 4);
+			fdb1.shape = &b1;
+			m_bpick3 = m_world->CreateBody(&bd1);
+			m_bpick3->CreateFixture(&fdb1);
+			
+			wj.Initialize(m_bpick2, m_bpick3, m_bpick3->GetPosition());
+			m_world->CreateJoint(&wj);
+			
+			
+			vertices[0].Set(-1.0f, -2.0f);
+			vertices[1].Set(-1.5f, -2.0f);
+			vertices[2].Set(1.0f, -3.0f);
+			b1.Set(vertices, 3);
+			fdb1.shape = &b1;
+			m_bpick4 = m_world->CreateBody(&bd1);
+			m_bpick4->CreateFixture(&fdb1);
+			
+			wj.Initialize(m_bpick3, m_bpick4, m_bpick4->GetPosition());
+			m_world->CreateJoint(&wj);
      		}
      		
-     		{
-			//the motorised joint
+     		{	//the motorised joint of backside pickup
+     		
 			b2RevoluteJointDef revoluteJointDef;
 			revoluteJointDef.bodyA = m_backarm2;
 			revoluteJointDef.bodyB = m_bpick1;
 			revoluteJointDef.collideConnected = false;
-			revoluteJointDef.localAnchorA.Set(0,-8);
-			revoluteJointDef.localAnchorB.Set(0,1.4);
+			revoluteJointDef.localAnchorA.Set(0,-13.5);
+			revoluteJointDef.localAnchorB.Set(0,2.9);
 			revoluteJointDef.enableLimit = true;
-			revoluteJointDef.lowerAngle = (0 * DEGTORAD);
-			revoluteJointDef.upperAngle = (30 * DEGTORAD);
+			revoluteJointDef.lowerAngle = (30 * DEGTORAD);
+			revoluteJointDef.upperAngle = (60 * DEGTORAD);
 			revoluteJointDef.enableMotor = true;
 			revoluteJointDef.maxMotorTorque = 5000.0f;
 			//revoluteJointDef.motorSpeed = -90 * DEGTORAD;//90 degrees per second
 			m_mjoint4 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
 			}
 			
-			{
-			//Frontarm1 arm attatches to chassis
+			{	//Frontarm1 arm attatched to chassis
+			
 			b2PolygonShape frontarm1;
-			frontarm1.SetAsBox(7,0.7);
+			frontarm1.SetAsBox(14,1);
 			b2FixtureDef fdfrontarm1;
 			fdfrontarm1.filter.groupIndex = -1;
 			fdfrontarm1.shape = &frontarm1;
-			fdfrontarm1.density = 0.80f;
+			fdfrontarm1.density = 0.20f;
 			
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(30.0f, 10.0f);
+			bd.position.Set(18.0f, 12.0f);
 			//bd.angle = 20* DEGTORAD;
 			m_frontarm1 = m_world->CreateBody(&bd);
 			//m_car->CreateFixture(&chassis, 1.0f);
 			m_frontarm1->CreateFixture(&fdfrontarm1);
 			}
 			
-			{
-			//the motorised joint
+			{	//the motorised joint between frontarm1 and chassis
+			
 			b2RevoluteJointDef revoluteJointDef;
 			revoluteJointDef.bodyA = m_car;
 			revoluteJointDef.bodyB = m_frontarm1;
 			revoluteJointDef.collideConnected = false;
-			revoluteJointDef.localAnchorA.Set(17,-2.7);
-			revoluteJointDef.localAnchorB.Set(-6,0);
+			revoluteJointDef.localAnchorA.Set(0,7);
+			revoluteJointDef.localAnchorB.Set(-14,0);
 			revoluteJointDef.enableLimit = true;
-			revoluteJointDef.lowerAngle = (45* DEGTORAD);
-			revoluteJointDef.upperAngle =  (70* DEGTORAD);
+			revoluteJointDef.lowerAngle = (-30* DEGTORAD);
+			revoluteJointDef.upperAngle =  (0* DEGTORAD);
 			revoluteJointDef.enableMotor = true;
 			revoluteJointDef.maxMotorTorque = 3000.0f;
 			m_mjoint5 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
 			}
 			
-			{
-			//Frontarm2 arm attatches to frontarm1
-			b2PolygonShape frontarm2;
-			frontarm2.SetAsBox(6,0.6);
-			b2FixtureDef fdfrontarm2;
-			fdfrontarm2.shape = &frontarm2;
-			fdfrontarm2.density = 0.50f;
-			fdfrontarm2.filter.groupIndex=-1;
+			{	//Digger attached to the frontarm1
+			
+			b2PolygonShape digger;
+			b2Vec2 vertices[3];
+			vertices[0].Set(0.0f,5.0f);
+			vertices[1].Set(-2.0f,-6.0f);
+			vertices[2].Set(2.0f,-4.0f);
+			digger.Set(vertices,3);
+			b2FixtureDef fddigger;
+			fddigger.shape = &digger;
+			fddigger.density = 0.10f;
+			
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(40.0f, 10.0f);
-			m_frontarm2 = m_world->CreateBody(&bd);
+			bd.position.Set(20.0f, 13.0f);
+			//bd.angle = 20* DEGTORAD;
+			m_digger_part1 = m_world->CreateBody(&bd);
 			//m_car->CreateFixture(&chassis, 1.0f);
-			m_frontarm2->CreateFixture(&fdfrontarm2);
+			m_digger_part1->CreateFixture(&fddigger);
+			
+			vertices[0].Set(-2.0f,-6.0f);
+			vertices[1].Set(11.0f,-5.0f);
+			vertices[2].Set(2.0f,-4.0f);
+			digger.Set(vertices,3);
+			m_digger_part2 = m_world->CreateBody(&bd);
+			m_digger_part2->CreateFixture(&fddigger);
+			
+			b2WeldJointDef wj;
+			wj.Initialize(m_digger_part1, m_digger_part2, m_digger_part2->GetPosition());
+			m_world->CreateJoint(&wj);
+			
 			}
 			
-			{
-			//the motorised joint
+			
+			{	//the revolute joint between frontarm1 and digger
 			b2RevoluteJointDef revoluteJointDef;
 			revoluteJointDef.bodyA = m_frontarm1;
-			revoluteJointDef.bodyB = m_frontarm2;
+			revoluteJointDef.bodyB = m_digger_part1;
 			revoluteJointDef.collideConnected = false;
-			revoluteJointDef.localAnchorA.Set(6,-0);
-			revoluteJointDef.localAnchorB.Set(-5,0);
+			revoluteJointDef.localAnchorA.Set(14,0);
+			revoluteJointDef.localAnchorB.Set(0,-1);
 			revoluteJointDef.enableLimit = true;
-			revoluteJointDef.lowerAngle = (-130* DEGTORAD);
-			revoluteJointDef.upperAngle =  (-110* DEGTORAD);
+			revoluteJointDef.lowerAngle = (10* DEGTORAD);
+			revoluteJointDef.upperAngle =  (30* DEGTORAD);
 			revoluteJointDef.enableMotor = true;
 			revoluteJointDef.maxMotorTorque = 5000.0f;
 			m_mjoint6 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
 			}
 			
-			{//piston support joins to frontarm2
-			b2PolygonShape pistonsupp;
-			pistonsupp.SetAsBox(1.9,0.2);
-			b2FixtureDef fdpistonsupp;
-			fdpistonsupp.filter.groupIndex=-1;
-			fdpistonsupp.shape = &pistonsupp;
-			fdpistonsupp.density = 0.1f;
-			fdpistonsupp.friction= 0.5f;
-			b2BodyDef bd;
-			bd.type = b2_dynamicBody;
-			m_pistonsupp = m_world->CreateBody(&bd);
-			m_pistonsupp->CreateFixture(&fdpistonsupp);
-			
-			//joint to join piston to frontarm2 
-			b2RevoluteJointDef revoluteJointDef;
-			revoluteJointDef.bodyA = m_frontarm2;
-			revoluteJointDef.bodyB = m_pistonsupp;
-			revoluteJointDef.localAnchorA.Set(5.5,0);
-			revoluteJointDef.localAnchorB.Set(1.5,0);
-			revoluteJointDef.enableLimit = true;
-			revoluteJointDef.lowerAngle = (180 * DEGTORAD);
-			revoluteJointDef.upperAngle = (180 * DEGTORAD);
-			m_mjoint7 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );	
-			}	
-			
-			{
-			b2PolygonShape piston1;
-			piston1.SetAsBox(1,0.2);
-			b2FixtureDef fdpiston1;
-			fdpiston1.shape = &piston1;
-			fdpiston1.density = 0.001f;
-			fdpiston1.filter.groupIndex=-1;
-			b2BodyDef bd;
-			bd.position.Set(40.0f, 10.0f);
-			bd.type = b2_dynamicBody;
-			m_piston1 = m_world->CreateBody(&bd);
-			m_piston1->CreateFixture(&fdpiston1);
-			
-			b2PolygonShape piston2;
-			piston2.SetAsBox(1,0.2);
-			b2FixtureDef fdpiston2;
-			fdpiston2.shape = &piston2;
-			fdpiston2.density = 0.001f;
-			fdpiston2.filter.groupIndex=-1;
-			b2BodyDef bd2;
-			bd2.position.Set(41.0f, 10.0f);
-			bd2.type = b2_dynamicBody;
-			m_piston2 = m_world->CreateBody(&bd2);
-			m_piston2->CreateFixture(&fdpiston2);
-			 
-			b2PolygonShape piston3;
-			piston3.SetAsBox(0.2,1.0);
-			b2FixtureDef fdpiston3;
-			fdpiston3.shape = &piston3;
-			fdpiston3.density = 0.001f;
-			fdpiston3.friction= 0.5f;
-			fdpiston3.filter.groupIndex=-1;
-			b2BodyDef bd3;
-			bd3.position.Set(44.0f, 10.0f);
-			bd3.type = b2_dynamicBody;
-			m_piston3 = m_world->CreateBody(&bd3);
-			m_piston3->CreateFixture(&fdpiston3);
-			
-			 
-			//joint to join piston1 to pistonsupp 
-			b2RevoluteJointDef revoluteJointDef2;
-			revoluteJointDef2.bodyA = m_pistonsupp;
-			revoluteJointDef2.bodyB = m_piston1;
-			revoluteJointDef2.collideConnected = false;
-			revoluteJointDef2.localAnchorA.Set(0,0);
-			revoluteJointDef2.localAnchorB.Set(-1,0);
-			revoluteJointDef2.enableLimit = true;
-			revoluteJointDef2.lowerAngle = (-90 * DEGTORAD);
-			revoluteJointDef2.upperAngle = (-90 * DEGTORAD);
-			m_mjoint8 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef2 );	
-			
-			//joint to join piston2 to piston3
-			b2RevoluteJointDef revoluteJointDef;
-			revoluteJointDef.bodyA = m_piston2;
-			revoluteJointDef.bodyB = m_piston3;
-			revoluteJointDef.collideConnected = false;
-			revoluteJointDef.localAnchorA.Set(0.9,0);
-			revoluteJointDef.localAnchorB.Set(0,0.9);
-			revoluteJointDef.enableLimit = true;
-			revoluteJointDef.lowerAngle = (0 * DEGTORAD);
-			revoluteJointDef.upperAngle = (0 * DEGTORAD);
-			m_mjoint9 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );	
-			
-			//prismatic joint for piston creation
-			b2PrismaticJointDef pjd;
-			pjd.bodyA = m_piston1;
-			pjd.bodyB = m_piston2;
-			pjd.collideConnected = false;
-			pjd.localAxisA.Set(1,0);
-			pjd.localAnchorA.Set( 0.8f,0);
-			pjd.localAnchorB.Set(-0.4f,0);
-			pjd.enableMotor = true;
-			pjd.maxMotorForce = 100.0f;
-			pjd.enableLimit = true;
-			pjd.lowerTranslation = 0.12f;
-			pjd.upperTranslation = 0.6f;
-			m_pistonjoint = (b2PrismaticJoint*)m_world->CreateJoint(&pjd);		
-			}
+			//~ {	//Frontarm2 arm attatches to frontarm1
+			//~ b2PolygonShape frontarm2;
+			//~ frontarm2.SetAsBox(6,0.6);
+			//~ b2FixtureDef fdfrontarm2;
+			//~ fdfrontarm2.shape = &frontarm2;
+			//~ fdfrontarm2.density = 0.50f;
+			//~ fdfrontarm2.filter.groupIndex=-1;
+			//~ b2BodyDef bd;
+			//~ bd.type = b2_dynamicBody;
+			//~ bd.position.Set(40.0f, 10.0f);
+			//~ m_frontarm2 = m_world->CreateBody(&bd);
+			//~ //m_car->CreateFixture(&chassis, 1.0f);
+			//~ m_frontarm2->CreateFixture(&fdfrontarm2);
+			//~ }
+			//~ 
+			//~ {	//the motorised joint between frontarm1 and 2
+			//~ b2RevoluteJointDef revoluteJointDef;
+			//~ revoluteJointDef.bodyA = m_frontarm1;
+			//~ revoluteJointDef.bodyB = m_frontarm2;
+			//~ revoluteJointDef.collideConnected = false;
+			//~ revoluteJointDef.localAnchorA.Set(6,-0);
+			//~ revoluteJointDef.localAnchorB.Set(-5,0);
+			//~ revoluteJointDef.enableLimit = true;
+			//~ revoluteJointDef.lowerAngle = (-130* DEGTORAD);
+			//~ revoluteJointDef.upperAngle =  (-110* DEGTORAD);
+			//~ revoluteJointDef.enableMotor = true;
+			//~ revoluteJointDef.maxMotorTorque = 5000.0f;
+			//~ m_mjoint6 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
+			//~ }
+			//~ 
+			//~ {	//piston support joins to frontarm2
+			//~ b2PolygonShape pistonsupp;
+			//~ pistonsupp.SetAsBox(1.9,0.2);
+			//~ b2FixtureDef fdpistonsupp;
+			//~ fdpistonsupp.filter.groupIndex=-1;
+			//~ fdpistonsupp.shape = &pistonsupp;
+			//~ fdpistonsupp.density = 0.1f;
+			//~ fdpistonsupp.friction= 0.5f;
+			//~ b2BodyDef bd;
+			//~ bd.type = b2_dynamicBody;
+			//~ m_pistonsupp = m_world->CreateBody(&bd);
+			//~ m_pistonsupp->CreateFixture(&fdpistonsupp);
+			//~ 
+			//~ //joint to join piston to frontarm2 
+			//~ b2RevoluteJointDef revoluteJointDef;
+			//~ revoluteJointDef.bodyA = m_frontarm2;
+			//~ revoluteJointDef.bodyB = m_pistonsupp;
+			//~ revoluteJointDef.localAnchorA.Set(5.5,0);
+			//~ revoluteJointDef.localAnchorB.Set(1.5,0);
+			//~ revoluteJointDef.enableLimit = true;
+			//~ revoluteJointDef.lowerAngle = (180 * DEGTORAD);
+			//~ revoluteJointDef.upperAngle = (180 * DEGTORAD);
+			//~ m_mjoint7 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );	
+			//~ }	
+			//~ 
+			//~ {
+			//~ b2PolygonShape piston1;
+			//~ piston1.SetAsBox(1,0.2);
+			//~ b2FixtureDef fdpiston1;
+			//~ fdpiston1.shape = &piston1;
+			//~ fdpiston1.density = 0.001f;
+			//~ fdpiston1.filter.groupIndex=-1;
+			//~ b2BodyDef bd;
+			//~ bd.position.Set(40.0f, 10.0f);
+			//~ bd.type = b2_dynamicBody;
+			//~ m_piston1 = m_world->CreateBody(&bd);
+			//~ m_piston1->CreateFixture(&fdpiston1);
+			//~ 
+			//~ b2PolygonShape piston2;
+			//~ piston2.SetAsBox(1,0.2);
+			//~ b2FixtureDef fdpiston2;
+			//~ fdpiston2.shape = &piston2;
+			//~ fdpiston2.density = 0.001f;
+			//~ fdpiston2.filter.groupIndex=-1;
+			//~ b2BodyDef bd2;
+			//~ bd2.position.Set(41.0f, 10.0f);
+			//~ bd2.type = b2_dynamicBody;
+			//~ m_piston2 = m_world->CreateBody(&bd2);
+			//~ m_piston2->CreateFixture(&fdpiston2);
+			 //~ 
+			//~ b2PolygonShape piston3;
+			//~ piston3.SetAsBox(0.2,1.0);
+			//~ b2FixtureDef fdpiston3;
+			//~ fdpiston3.shape = &piston3;
+			//~ fdpiston3.density = 0.001f;
+			//~ fdpiston3.friction= 0.5f;
+			//~ fdpiston3.filter.groupIndex=-1;
+			//~ b2BodyDef bd3;
+			//~ bd3.position.Set(44.0f, 10.0f);
+			//~ bd3.type = b2_dynamicBody;
+			//~ m_piston3 = m_world->CreateBody(&bd3);
+			//~ m_piston3->CreateFixture(&fdpiston3);
+			//~ 
+			 //~ 
+			//~ //joint to join piston1 to pistonsupp 
+			//~ b2RevoluteJointDef revoluteJointDef2;
+			//~ revoluteJointDef2.bodyA = m_pistonsupp;
+			//~ revoluteJointDef2.bodyB = m_piston1;
+			//~ revoluteJointDef2.collideConnected = false;
+			//~ revoluteJointDef2.localAnchorA.Set(0,0);
+			//~ revoluteJointDef2.localAnchorB.Set(-1,0);
+			//~ revoluteJointDef2.enableLimit = true;
+			//~ revoluteJointDef2.lowerAngle = (-90 * DEGTORAD);
+			//~ revoluteJointDef2.upperAngle = (-90 * DEGTORAD);
+			//~ m_mjoint8 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef2 );	
+			//~ 
+			//~ //joint to join piston2 to piston3
+			//~ b2RevoluteJointDef revoluteJointDef;
+			//~ revoluteJointDef.bodyA = m_piston2;
+			//~ revoluteJointDef.bodyB = m_piston3;
+			//~ revoluteJointDef.collideConnected = false;
+			//~ revoluteJointDef.localAnchorA.Set(0.9,0);
+			//~ revoluteJointDef.localAnchorB.Set(0,0.9);
+			//~ revoluteJointDef.enableLimit = true;
+			//~ revoluteJointDef.lowerAngle = (0 * DEGTORAD);
+			//~ revoluteJointDef.upperAngle = (0 * DEGTORAD);
+			//~ m_mjoint9 = (b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );	
+			//~ 
+			//~ //prismatic joint for piston creation
+			//~ b2PrismaticJointDef pjd;
+			//~ pjd.bodyA = m_piston1;
+			//~ pjd.bodyB = m_piston2;
+			//~ pjd.collideConnected = false;
+			//~ pjd.localAxisA.Set(1,0);
+			//~ pjd.localAnchorA.Set( 0.8f,0);
+			//~ pjd.localAnchorB.Set(-0.4f,0);
+			//~ pjd.enableMotor = true;
+			//~ pjd.maxMotorForce = 100.0f;
+			//~ pjd.enableLimit = true;
+			//~ pjd.lowerTranslation = 0.12f;
+			//~ pjd.upperTranslation = 0.4f;
+			//~ m_pistonjoint = (b2PrismaticJoint*)m_world->CreateJoint(&pjd);		
+			//~ }
 			
 			//testbox
 			{
@@ -539,11 +675,11 @@ namespace cs296
 			break;
 			
 		case '7':	
-			m_mjoint5->SetMotorSpeed(1.0f);
+			m_mjoint5->SetMotorSpeed(5.0f);
 			break;
 			
 		case '8':	
-			m_mjoint5->SetMotorSpeed(-1.0f);
+			m_mjoint5->SetMotorSpeed(-5.0f);
 			break;
 		
 		case '9':	
