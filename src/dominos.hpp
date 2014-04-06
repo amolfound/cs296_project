@@ -42,7 +42,7 @@ namespace cs296
     dominos_t();
       
     void keyboard(unsigned char key);
-    //void keyboardUp(unsigned char key);
+    void keyboard_up(unsigned char key);
 	static base_sim_t* create()
 	{
 		return new dominos_t;
@@ -53,20 +53,14 @@ namespace cs296
 	b2Body* m_back_hinge;
 	b2Body* m_pipe_part1;
 	b2Body* m_pipe_part2;
-	b2Body* m_pipe_part3;
 	b2Body* m_wheel1;
 	b2Body* m_wheel2;	
 	b2Body* m_backarm1;
 	b2Body* m_backarm2;
 	b2Body* m_frontarm1;
-	b2Body* m_digger_part1;
-	b2Body* m_digger_part2;
-	b2Body* m_digger_part3;
+	b2Body* m_digger;
 	b2Body* m_frontarm2;
-	b2Body* m_bpick1;
-	b2Body* m_bpick2;
-	b2Body* m_bpick3;
-	b2Body* m_bpick4;
+	b2Body* m_bpick;
 	b2Body* m_piston1;
 	b2Body* m_piston2;
 	b2Body* m_piston3;
