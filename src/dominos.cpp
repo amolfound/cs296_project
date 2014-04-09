@@ -131,8 +131,8 @@ namespace cs296
 			b2Vec2 vertices2[4];
 			b2Vec2 vertices3[4];
 			vertices1[0].Set(0.0f, 0.0f);
-			vertices1[1].Set(0.0f, 14.0f);
-			vertices1[2].Set(2.0f, 14.0f);
+			vertices1[1].Set(0.0f, 10.0f);
+			vertices1[2].Set(2.0f, 10.0f);
 			vertices1[3].Set(2.0f, 0.0f);
 			bin1.Set(vertices1, 4);
 			vertices2[0].Set(2.0f, 0.0f);
@@ -141,8 +141,8 @@ namespace cs296
 			vertices2[3].Set(12.0f, 0.0f);
 			bin2.Set(vertices2, 4);
 			vertices3[0].Set(12.0f, 0.0f);
-			vertices3[1].Set(12.0f, 14.0f);
-			vertices3[2].Set(14.0f, 14.0f);
+			vertices3[1].Set(12.0f, 10.0f);
+			vertices3[2].Set(14.0f, 10.0f);
 			vertices3[3].Set(14.0f, 0.0f);
 			bin3.Set(vertices3, 4);
 
