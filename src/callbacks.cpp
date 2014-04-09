@@ -26,12 +26,12 @@ namespace cs296
   cs296::sim_t* entry;
   cs296::base_sim_t* test;
   cs296::settings_t settings;
-  int32 width = 640;
-  int32 height = 480;
+  int32 width = 1360;
+  int32 height = 720;
   int32 frame_period = 16;
   int32 main_window;
   float settings_hz = 60.0;
-  float32 view_zoom = 1.0f;
+  float32 view_zoom = 2.0f;
   int tx, ty, tw, th;
   bool r_mouse_down;
   b2Vec2 lastp;
@@ -167,6 +167,29 @@ namespace cs296
       callbacks_t::resize_cb(width, height);
       break;
     }
+  }
+  void callbacks_t::keyboard_special1_cb(int key ,float x , float y) {
+	  switch (key)
+    {
+    case GLUT_ACTIVE_SHIFT:
+      
+      //! Press left to pan left.
+    case GLUT_KEY_LEFT:
+      settings.view_center.x = x;
+      //settings.view_center.y = y;
+      resize_cb(width, height);
+      break;
+      
+    //! Press right to pan right.
+    case GLUT_KEY_RIGHT:
+      settings.view_center.x = x;
+      //settings.view_center.y = y;
+      resize_cb(width, height);
+      break;
+  }
+	  
+	  
+	  
   }
 
   void callbacks_t::keyboard_up_cb(unsigned char key, int x, int y)

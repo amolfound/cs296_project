@@ -25,7 +25,7 @@
 
 #include "cs296_base.hpp"
 #include "render.hpp"
-
+#include <math.h>
 #ifdef __APPLE__
 	#include <GLUT/glut.h>
 #else
@@ -34,7 +34,7 @@
 
 #include <cstring>
 using namespace std;
-
+#include "callbacks.hpp"
 #include "dominos.hpp"
 
 namespace cs296
@@ -47,27 +47,123 @@ namespace cs296
 		m_hz = 10.0f;
 		m_zeta = 0.2f;
 		m_speed = 300.0f;
-
+		int num=360;
+		int count=0;
+		float y;
+		b2Vec2 groundVertices[num];
 		b2Body* ground = NULL;
 		{
 			b2BodyDef bd;
+			bd.position.Set(0.0f,0.0f);
+			bd.type=b2_staticBody;
 			ground = m_world->CreateBody(&bd);
-
-			b2EdgeShape shape;
-
+			int w=0;
+			b2ChainShape groundShape;
+			y=-20;
+			float y1;
+			
+			for(int j=0;j<7;j++) {
+				for(int i=0;i<45;i++) {
+				
+					y1=rand() % 2 - 1;
+					if(w==1) groundVertices[j*45 +i].Set(3*(j*45.0f +i)-100.0f , y - y1);
+					else if(w==2) groundVertices[j*45 +i].Set(3*(j*45.0f +i)-100.0f , y + y1);
+					else groundVertices[j*45 +i].Set(3*(j*45.0f +i)-100.0f , y);
+					y=groundVertices[j*45 +i].y;	
+					count+=1;
+				}
+				w=rand() % 3  ;
+			}
+			
+			groundShape.CreateChain(groundVertices,count);
 			b2FixtureDef fd;
-			fd.shape = &shape;
+			fd.shape = &groundShape;
 			fd.density = 0.0f;
 			fd.friction = 0.6f;
-
-			shape.Set(b2Vec2(-200.0f, 0.0f), b2Vec2(200.0f, 0.0f));
+			
 			ground->CreateFixture(&fd);
+		}
+		
+		{
+			b2PolygonShape bigbin1;
+			b2PolygonShape bigbin2;
+			b2PolygonShape bigbin3;
+			
+			b2Vec2 vertices1[4];
+			b2Vec2 vertices2[4];
+			b2Vec2 vertices3[4];
+			vertices1[0].Set(0.0f, 0.0f);
+			vertices1[3].Set(0.0f, -100.0f);
+			vertices1[2].Set(10.0f, -100.0f);
+			vertices1[1].Set(10.0f, 0.0f);
+			bigbin1.Set(vertices1, 4);
+			vertices2[0].Set(10.0f, -100.0f);
+			vertices2[1].Set(10.0f, -90.0f);
+			vertices2[2].Set(100.0f,-90.0f);
+			vertices2[3].Set(100.0f, -100.0f);
+			bigbin2.Set(vertices2, 4);
+			vertices3[0].Set(100.0f, -100.0f);
+			vertices3[1].Set(100.0f, 0.0f);
+			vertices3[2].Set(110.0f, 0.0f);
+			vertices3[3].Set(110.0f, -100.0f);
+			bigbin3.Set(vertices3, 4);
 
-			//float32 hs[10] = {0.25f, 1.0f, 4.0f, 0.0f, 0.0f, -1.0f, -2.0f, -2.0f, -1.25f, 0.0f};
+			
+			//creates fixture for the chassis with the polygon shape and some density.
+			//b2FixtureDef fdbin;
+			//fdbin.shape = &Bin;
+			//fdbin.density = 0.0f;
+			//creates the body for chassis in m_world using the above fixture	
+			b2BodyDef bd2;
+			bd2.type = b2_staticBody;
+			bd2.position.Set(844.0f, y);
+			m_bigbin = m_world->CreateBody(&bd2);
+			m_bigbin->CreateFixture(&bigbin1, 1.0f);
+			m_bigbin->CreateFixture(&bigbin2, 1.0f);
+			m_bigbin->CreateFixture(&bigbin3, 1.0f);
+		}
+		{
+			b2PolygonShape bin1;
+			b2PolygonShape bin2;
+			b2PolygonShape bin3;
+			
+			b2Vec2 vertices1[4];
+			b2Vec2 vertices2[4];
+			b2Vec2 vertices3[4];
+			vertices1[0].Set(0.0f, 0.0f);
+			vertices1[1].Set(0.0f, 14.0f);
+			vertices1[2].Set(2.0f, 14.0f);
+			vertices1[3].Set(2.0f, 0.0f);
+			bin1.Set(vertices1, 4);
+			vertices2[0].Set(2.0f, 0.0f);
+			vertices2[1].Set(2.0f, 2.0f);
+			vertices2[2].Set(12.0f,2.0f);
+			vertices2[3].Set(12.0f, 0.0f);
+			bin2.Set(vertices2, 4);
+			vertices3[0].Set(12.0f, 0.0f);
+			vertices3[1].Set(12.0f, 14.0f);
+			vertices3[2].Set(14.0f, 14.0f);
+			vertices3[3].Set(14.0f, 0.0f);
+			bin3.Set(vertices3, 4);
 
-			//float32 x = 20.0f, y1 = 0.0f, dx = 5.0f;
+			
+			//creates fixture for the chassis with the polygon shape and some density.
+			//b2FixtureDef fdbin;
+			//fdbin.shape = &Bin;
+			//fdbin.density = 0.0f;
+			//creates the body for chassis in m_world using the above fixture	
+			b2BodyDef bd;
+			bd.type = b2_staticBody;
+			bd.position.Set(-100.0f, -20.0f);
+			m_bin = m_world->CreateBody(&bd);
+			m_bin->CreateFixture(&bin1, 1.0f);
+			m_bin->CreateFixture(&bin2, 1.0f);
+			m_bin->CreateFixture(&bin3, 1.0f);
+			
 			
 		}
+		
+		
 
 		
 		{	// Car  
@@ -92,7 +188,7 @@ namespace cs296
 			//creates the body for chassis in m_world using the above fixture	
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(0.0f, 10.0f);
+			bd.position.Set(0.0f, -10.0f);
 			m_car = m_world->CreateBody(&bd);
 			//m_car->CreateFixture(&chassis, 1.0f);
 			m_car->CreateFixture(&fdchassis);
@@ -101,7 +197,7 @@ namespace cs296
 			chassis_up.SetAsBox(9.5,7);
 			fdchassis.shape = &chassis_up;
 			fdchassis.filter.groupIndex = -1;
-			bd.position.Set(-9.5f,25.0f);
+			bd.position.Set(-9.5f,5.0f);
 			m_car_up = m_world->CreateBody(&bd);
 			m_car_up->CreateFixture(&fdchassis);
 			
@@ -112,7 +208,7 @@ namespace cs296
 			b2PolygonShape hinge;
 			hinge.SetAsBox(2,2);
 			fdchassis.shape = &hinge;
-			bd.position.Set(-21.0f,7.0f);
+			bd.position.Set(-21.0f,-13.0f);
 			m_back_hinge = m_world->CreateBody(&bd);
 			m_back_hinge->CreateFixture(&fdchassis);
 			
@@ -136,7 +232,7 @@ namespace cs296
 				
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(10.0f, 16.2f);
+			bd.position.Set(10.0f, -3.8f);
 			m_pipe_part1 = m_world->CreateBody(&bd);
 			m_pipe_part1->CreateFixture(&fdpipe);
 			
@@ -178,19 +274,19 @@ namespace cs296
 			fd.shape = &circle;
 			fd.density = 5.0f;
 			fd.friction = 0.9f;
-			fd.restitution = 0.9f;
+			fd.restitution = 0.0f;
 			fd.filter.groupIndex=-1;
 			
 			//creates rear wheel using fd fixture
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(-14.0f, 6.5f);
+			bd.position.Set(-14.0f, -13.5f);
 			m_wheel1 = m_world->CreateBody(&bd);
 			m_wheel1->CreateFixture(&fd);
 			
 			//creates front wheel using fd fixture
 			circle.m_radius = 6.0f;
-			bd.position.Set(13.0f, 6.0f);
+			bd.position.Set(13.0f, -14.0f);
 			m_wheel2 = m_world->CreateBody(&bd);
 			m_wheel2->CreateFixture(&fd);
 			
@@ -201,7 +297,7 @@ namespace cs296
 			//places the joint in the m_world using wheel joint prototype for the rear wheel
 			jd.Initialize(m_car, m_wheel1, m_wheel1->GetPosition(), axis);
 			jd.motorSpeed = 0.0f;
-			jd.maxMotorTorque = 50000.0f;
+			jd.maxMotorTorque = 150000.0f;
 			jd.enableMotor = true;
 			jd.frequencyHz = m_hz;
 			jd.dampingRatio = m_zeta;
@@ -234,7 +330,7 @@ namespace cs296
 			fdbackarm1.filter.groupIndex = -1;
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(-22.0f, 15.0f);
+			bd.position.Set(-22.0f, -5.0f);
 			m_backarm1 = m_world->CreateBody(&bd);
 			//m_car->CreateFixture(&chassis, 1.0f);
 			m_backarm1->CreateFixture(&fdbackarm1);
@@ -256,7 +352,7 @@ namespace cs296
 			
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(-28.0f, 17.0f);
+			bd.position.Set(-28.0f, -3.0f);
 			m_backarm2 = m_world->CreateBody(&bd);
 			//m_car->CreateFixture(&chassis, 1.0f);
 			m_backarm2->CreateFixture(&fdbackarm2);
@@ -310,7 +406,7 @@ namespace cs296
 			fdb1.friction = 0;
 			b2BodyDef bd1;
 			bd1.type = b2_dynamicBody;
-			bd1.position.Set(-25.0f, 3.0f);
+			bd1.position.Set(-25.0f, -17.0f);
 			bd1.angle = 50* DEGTORAD;
 			m_bpick = m_world->CreateBody(&bd1);
 			//m_car->CreateFixture(&chassis, 1.0f);
@@ -369,7 +465,7 @@ namespace cs296
 			
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(14.0f, 15.0f);
+			bd.position.Set(14.0f, -5.0f);
 			//bd.angle = 20* DEGTORAD;
 			m_frontarm1 = m_world->CreateBody(&bd);
 			//m_car->CreateFixture(&chassis, 1.0f);
@@ -407,7 +503,7 @@ namespace cs296
 			
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(28.0f, 15.0f);
+			bd.position.Set(28.0f, -5.0f);
 			//bd.angle = 20* DEGTORAD;
 			m_digger = m_world->CreateBody(&bd);
 			m_digger->SetGravityScale(0.1f);
@@ -449,7 +545,7 @@ namespace cs296
 			fdpiston.friction = 0;
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(3.0f, 10.0f);
+			bd.position.Set(3.0f, -10.0f);
 			bd.angle = 20* DEGTORAD;
 			m_piston1 = m_world->CreateBody(&bd);
 			m_piston1->CreateFixture(&fdpiston);
@@ -465,7 +561,7 @@ namespace cs296
 			revoluteJointDef.upperAngle =  (45* DEGTORAD);
 			(b2RevoluteJoint*)m_world->CreateJoint( &revoluteJointDef );
 			
-			bd.position.Set(10.0f , 13.0f);
+			bd.position.Set(10.0f , -7.0f);
 			piston.SetAsBox(5,0.5);
 			m_piston2 = m_world->CreateBody(&bd);
 			m_piston2->CreateFixture(&fdpiston);
@@ -498,63 +594,89 @@ namespace cs296
 			}
 				
 			
-			//testbox
-			{
-			b2PolygonShape testbox;
-			testbox.SetAsBox(1.4,1.4);
-			b2FixtureDef fdtestbox;
-			fdtestbox.filter.groupIndex = 1;
-			fdtestbox.shape = &testbox;
-			fdtestbox.density = 0.1f;
-			fdtestbox.friction=0.5;
-			b2BodyDef bd;
-			bd.position.Set(40.0f, 1.0f);
-			bd.type = b2_dynamicBody;
-			test_box1 = m_world->CreateBody(&bd);
-			test_box1->CreateFixture(&fdtestbox);
-			}
+			////testbox
+			//{
+			//b2PolygonShape testbox;
+			//testbox.SetAsBox(1.4,1.4);
+			//b2FixtureDef fdtestbox;
+			//fdtestbox.filter.groupIndex = 1;
+			//fdtestbox.shape = &testbox;
+			//fdtestbox.density = 0.1f;
+			//fdtestbox.friction=0.5;
+			//b2BodyDef bd;
+			//bd.position.Set(40.0f, -19.0f);
+			//bd.type = b2_dynamicBody;
+			//test_box1 = m_world->CreateBody(&bd);
+			//test_box1->CreateFixture(&fdtestbox);
+			//}
+			
+			// test boxes 
+			
 			
 			//testball
 			{
 			b2CircleShape circle;
-			circle.m_radius = 1.1f;
+			circle.m_radius = 2.5f;
 			b2FixtureDef fd;
 			fd.shape = &circle;
-			fd.density = 1.5f;
+			fd.density = 0.2f;
 			fd.friction = 0.9f;
 			b2BodyDef bd;
 			bd.type = b2_dynamicBody;
-			bd.position.Set(-35.0f, 3.5f);
+			bd.position.Set(-35.0f, -16.5f);
 			test_ball = m_world->CreateBody(&bd);
 			test_ball->CreateFixture(&fd);
 			}
 			
 			//fixed obstacle
-			{
-			b2PolygonShape testbox;
-			testbox.SetAsBox(0.1,1);
-			b2FixtureDef fdtestbox;
-			fdtestbox.shape = &testbox;
-			b2BodyDef bd;
-			bd.position.Set(-33.0f, 1);
-			obs = m_world->CreateBody(&bd);
-			obs->CreateFixture(&fdtestbox);
-			}
+			//{
+			//b2PolygonShape testbox;
+			//testbox.SetAsBox(0.1,1);
+			//b2FixtureDef fdtestbox;
+			//fdtestbox.shape = &testbox;
+			//b2BodyDef bd;
+			//bd.position.Set(-33.0f, -19);
+			//obs = m_world->CreateBody(&bd);
+			//obs->CreateFixture(&fdtestbox);
+			//}
 			
 		}
 	}
+	void dominos_t::mouse_down(const b2Vec2& p) {
+				b2PolygonShape testbox;
+				testbox.SetAsBox(1.4,1.4);
+				b2FixtureDef fdtestbox;
+				fdtestbox.filter.groupIndex = 1;
+				fdtestbox.shape = &testbox;
+				fdtestbox.density = 0.1f;
+				fdtestbox.friction=0.5;
+				b2Body* box=NULL;
+				b2BodyDef bd;
+				bd.type = b2_dynamicBody;
+				bd.position.Set(p.x, p.y);
+				box = m_world->CreateBody(&bd);
+				box->CreateFixture(&fdtestbox);
+		
+		
+	}
     
-
+	float x_car,y_car;
     void dominos_t::keyboard(unsigned char key)
     {
         switch (key)
 		{
 		case 'a':
+			x_car=m_car->GetPosition().x;
+			y_car=m_car->GetPosition().y;
 			m_spring1->SetMotorSpeed(m_speed);
+			callbacks_t::keyboard_special1_cb(GLUT_KEY_LEFT,x_car,y_car);
 			break;
 
 		case 'd':
+			x_car=m_car->GetPosition().x;
+			y_car=m_car->GetPosition().y;
 			m_spring1->SetMotorSpeed(-m_speed);
+			callbacks_t::keyboard_special1_cb(GLUT_KEY_LEFT,x_car,y_car);
 			break;
 		
 		case '1':
@@ -606,7 +728,10 @@ namespace cs296
 		{
 		case 'a':
 		case 'd':
+			x_car=m_car->GetPosition().x;
+			y_car=m_car->GetPosition().y;
 			m_spring1->SetMotorSpeed(0.0f);
+			callbacks_t::keyboard_special1_cb(GLUT_KEY_LEFT,x_car,y_car);
 			break;
 		
 		case '1':			

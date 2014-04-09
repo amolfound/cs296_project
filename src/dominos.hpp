@@ -43,12 +43,16 @@ namespace cs296
       
     void keyboard(unsigned char key);
     void keyboard_up(unsigned char key);
+    void mouse_down(const b2Vec2& p);
+    //void resize(int w , int h);
 	static base_sim_t* create()
 	{
 		return new dominos_t;
 	}
 	
 	b2Body* m_car;
+	b2Body* m_bin;
+	b2Body* m_bigbin;
 	b2Body* m_car_up;
 	b2Body* m_back_hinge;
 	b2Body* m_pipe_part1;
