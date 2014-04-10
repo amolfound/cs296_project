@@ -68,7 +68,7 @@ namespace cs296
 			b2ChainShape groundShape;
 			y=-20;
 			float y1;
-			//srand (time(NULL));
+			srand (time(NULL));
 			for(int j=0;j<7;j++) {
 				for(int i=0;i<45;i++) {
 					y1=rand() % 2 - 1;
