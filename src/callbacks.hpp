@@ -41,10 +41,10 @@ namespace cs296
   //! GLUT keyboard callback
   //! This gets called whenever a key is pressed
   static void keyboard_cb(unsigned char key, int x, int y);
+  static void keyboard_dominos_cb(int key, float x, float y);
   
   //! GLUT keyboard callback for keys with special keycodes
   static void keyboard_special_cb(int key, int x, int y);
-  static void keyboard_special1_cb(int key, float x, float y);
   
   //! Another keyboard callback? Why is this necessary? Is this used?
   static void keyboard_up_cb(unsigned char key, int x, int y);

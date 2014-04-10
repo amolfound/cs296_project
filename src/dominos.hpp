@@ -30,7 +30,6 @@
 #define RADTODEG 57.295779513082320876f
 #endif
 
-//structure to store current surface velocity of a fixture
 
 namespace cs296
 {
@@ -44,50 +43,36 @@ namespace cs296
     void keyboard(unsigned char key);
     void keyboard_up(unsigned char key);
     void mouse_down(const b2Vec2& p);
-    //void resize(int w , int h);
+    //! creates dominos_t simulation
 	static base_sim_t* create()
 	{
 		return new dominos_t;
 	}
 	
-	b2Body* m_car;
-	b2Body* m_bin;
-	b2Body* m_bigbin;
-	b2Body* m_car_up;
-	b2Body* m_back_hinge;
-	b2Body* m_pipe_part1;
-	b2Body* m_pipe_part2;
-	b2Body* m_wheel1;
-	b2Body* m_wheel2;	
-	b2Body* m_backarm1;
-	b2Body* m_backarm2;
-	b2Body* m_frontarm1;
-	b2Body* m_digger;
-	b2Body* m_frontarm2;
-	b2Body* m_bpick;
-	b2Body* m_piston1;
-	b2Body* m_piston2;
-	b2Body* m_piston3;
-	b2Body* m_pistonsupp;
-	b2Body* test_box1;
-	b2Body* test_box2;
-	b2Body* test_ball;
-	b2Body* obs;
-	float32 m_hz;
-	float32 m_zeta;
-	float32 m_speed;
-	b2WheelJoint* m_spring1;
-	b2WheelJoint* m_spring2;
-	b2RevoluteJoint* m_mjoint1;				//car + backsidearm1
-	b2RevoluteJoint* m_mjoint2;				//backsidearm1 + backsidearm2			
-	b2RevoluteJoint* m_mjoint3;             //fixed joint to form back pickup
-	b2RevoluteJoint* m_mjoint4;				//backsidearm2 + backpickup
-	b2RevoluteJoint* m_mjoint5;				//car + frontarm1	
-	b2RevoluteJoint* m_mjoint6;				//frontarm1 + frontarm2
-	b2RevoluteJoint* m_mjoint7;				//fixed joint pistonsupp + frontarm2	
-	b2RevoluteJoint* m_mjoint8;				//fixed joint pistonsupp + piston1
-	b2RevoluteJoint* m_mjoint9;				//fixed piston2 + piston3	
-	b2PrismaticJoint* m_pistonjoint;		//piston movement piston1 + piston2
+	b2Body* m_car;						    //!< body of the car
+	b2Body* m_back_hinge;					//!< hinge attached to the car
+	b2Body* m_backarm1;						//!< back arm attached to the car
+	b2Body* m_backarm2;						//!< another back arm attached to the first back arm
+	b2Body* m_frontarm1;					//!< front arm attached to the car
+	b2Body* m_digger;						//!< digger attached to the front arm
+	b2Body* m_bpick;						//!< picker attached to the back arm
+	b2Body* m_piston1;						//!< piston attached to the car
+	b2Body* m_piston2;						//!< piston part attached to the front arm
+	b2Body* test_box1;						//!< a test box
+	b2Body* test_box2;						//!< another test box	
+	b2Body* test_ball;						//!< a test ball
+	b2Body* obs;							//!< a still obstacle
+	float32 m_hz;							//!< frequency value for oscillations in wheel
+	float32 m_zeta;							//!< damping rato for wheels
+	float32 m_speed;						//!< speed of wheel motors
+	b2WheelJoint* m_spring1;				//!< wheel joint for the rear wheel
+	b2WheelJoint* m_spring2;				//!< wheel joint for the front wheel
+	b2RevoluteJoint* m_mjoint1;				//!< revolute joint between car and backsidearm1
+	b2RevoluteJoint* m_mjoint2;				//!< revolute joint between backsidearm1 and backsidearm2	
+	b2RevoluteJoint* m_mjoint4;				//!< revolute joint between back pickup and the 2nd back arm
+	b2RevoluteJoint* m_mjoint5;				//!< revolute joint between car and frontarm
+	b2RevoluteJoint* m_mjoint6;				//!< revolute joint between frontarm and digger
+	b2PrismaticJoint* m_pistonjoint;		//!< prismatic joint between piston movement between piston1 and piston2
   };
 }
   

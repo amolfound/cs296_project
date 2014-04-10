@@ -126,6 +126,24 @@ namespace cs296
     }
   }
   
+  void callbacks_t::keyboard_dominos_cb(int key ,float x , float y) {
+	  switch (key)
+    {
+    case GLUT_ACTIVE_SHIFT:
+      
+      //! Press left to pan left.
+    case GLUT_KEY_LEFT:
+      settings.view_center.x = x;
+      resize_cb(width, height);
+      break;
+      
+    //! Press right to pan right.
+    case GLUT_KEY_RIGHT:
+      settings.view_center.x = x;
+      resize_cb(width, height);
+      break;
+	}
+  }
   
   void callbacks_t::keyboard_special_cb(int key, int x, int y)
   {
@@ -167,29 +185,6 @@ namespace cs296
       callbacks_t::resize_cb(width, height);
       break;
     }
-  }
-  void callbacks_t::keyboard_special1_cb(int key ,float x , float y) {
-	  switch (key)
-    {
-    case GLUT_ACTIVE_SHIFT:
-      
-      //! Press left to pan left.
-    case GLUT_KEY_LEFT:
-      settings.view_center.x = x;
-      //settings.view_center.y = y;
-      resize_cb(width, height);
-      break;
-      
-    //! Press right to pan right.
-    case GLUT_KEY_RIGHT:
-      settings.view_center.x = x;
-      //settings.view_center.y = y;
-      resize_cb(width, height);
-      break;
-  }
-	  
-	  
-	  
   }
 
   void callbacks_t::keyboard_up_cb(unsigned char key, int x, int y)
