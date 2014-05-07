@@ -41,6 +41,7 @@ namespace cs296
   //! GLUT keyboard callback
   //! This gets called whenever a key is pressed
   static void keyboard_cb(unsigned char key, int x, int y);
+  static void keyboard_dominos_cb(int key, float x, float y);
   
   //! GLUT keyboard callback for keys with special keycodes
   static void keyboard_special_cb(int key, int x, int y);

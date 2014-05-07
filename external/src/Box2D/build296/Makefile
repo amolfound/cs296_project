@@ -36,10 +36,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/rakesh/bin/cs296_project/external/src/Box2D
+CMAKE_SOURCE_DIR = /home/rakesh/bin/g26_project/cs296_project/external/src/Box2D
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/rakesh/bin/cs296_project/external/src/Box2D/build296
+CMAKE_BINARY_DIR = /home/rakesh/bin/g26_project/cs296_project/external/src/Box2D/build296
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -107,9 +107,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/rakesh/bin/cs296_project/external/src/Box2D/build296/CMakeFiles /home/rakesh/bin/cs296_project/external/src/Box2D/build296/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/rakesh/bin/g26_project/cs296_project/external/src/Box2D/build296/CMakeFiles /home/rakesh/bin/g26_project/cs296_project/external/src/Box2D/build296/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/rakesh/bin/cs296_project/external/src/Box2D/build296/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/rakesh/bin/g26_project/cs296_project/external/src/Box2D/build296/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

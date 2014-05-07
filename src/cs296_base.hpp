@@ -135,7 +135,8 @@ namespace cs296
     virtual void mouse_down(const b2Vec2& p) { B2_NOT_USED(p); }
     virtual void mouse_up(const b2Vec2& p) { B2_NOT_USED(p); }
     void mouse_move(const b2Vec2& p) { B2_NOT_USED(p); }
-
+    
+    const b2World* get_world(void) {return m_world;}
     
     // Let derived tests know that a joint was destroyed.
     virtual void joint_destroyed(b2Joint* joint) { B2_NOT_USED(joint); }
